@@ -30,67 +30,61 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
-            this.btnIniciar = new System.Windows.Forms.Button();
-            this.btnPausar = new System.Windows.Forms.Button();
-            this.btnMinimizar = new System.Windows.Forms.Button();
-            this.btnSalir = new System.Windows.Forms.Button();
             this.ttpMensajitos = new System.Windows.Forms.ToolTip(this.components);
+            this.BtnEstatus = new System.Windows.Forms.PictureBox();
+            this.BtnMinimizar = new System.Windows.Forms.PictureBox();
+            this.BtnCerrar = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnEstatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnIniciar
+            // BtnEstatus
             // 
-            resources.ApplyResources(this.btnIniciar, "btnIniciar");
-            this.btnIniciar.Name = "btnIniciar";
-            this.ttpMensajitos.SetToolTip(this.btnIniciar, resources.GetString("btnIniciar.ToolTip"));
-            this.btnIniciar.UseVisualStyleBackColor = true;
-            this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
+            this.BtnEstatus.Image = global::SpyScr.Properties.Resources.imgSwitchOn;
+            resources.ApplyResources(this.BtnEstatus, "BtnEstatus");
+            this.BtnEstatus.Name = "BtnEstatus";
+            this.BtnEstatus.TabStop = false;
             // 
-            // btnPausar
+            // BtnMinimizar
             // 
-            resources.ApplyResources(this.btnPausar, "btnPausar");
-            this.btnPausar.Name = "btnPausar";
-            this.ttpMensajitos.SetToolTip(this.btnPausar, resources.GetString("btnPausar.ToolTip"));
-            this.btnPausar.UseVisualStyleBackColor = true;
-            this.btnPausar.Click += new System.EventHandler(this.btnPausar_Click);
+            this.BtnMinimizar.Image = global::SpyScr.Properties.Resources.imgWindows_1;
+            resources.ApplyResources(this.BtnMinimizar, "BtnMinimizar");
+            this.BtnMinimizar.Name = "BtnMinimizar";
+            this.BtnMinimizar.TabStop = false;
             // 
-            // btnMinimizar
+            // BtnCerrar
             // 
-            resources.ApplyResources(this.btnMinimizar, "btnMinimizar");
-            this.btnMinimizar.Name = "btnMinimizar";
-            this.ttpMensajitos.SetToolTip(this.btnMinimizar, resources.GetString("btnMinimizar.ToolTip"));
-            this.btnMinimizar.UseVisualStyleBackColor = true;
-            this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
-            // 
-            // btnSalir
-            // 
-            resources.ApplyResources(this.btnSalir, "btnSalir");
-            this.btnSalir.Name = "btnSalir";
-            this.ttpMensajitos.SetToolTip(this.btnSalir, resources.GetString("btnSalir.ToolTip"));
-            this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.BtnCerrar.Image = global::SpyScr.Properties.Resources.imgExit;
+            resources.ApplyResources(this.BtnCerrar, "BtnCerrar");
+            this.BtnCerrar.Name = "BtnCerrar";
+            this.BtnCerrar.TabStop = false;
+            this.BtnCerrar.Click += new System.EventHandler(this.BtnCerrar_Click);
             // 
             // frmPrincipal
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.btnMinimizar);
-            this.Controls.Add(this.btnPausar);
-            this.Controls.Add(this.btnIniciar);
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ControlBox = false;
+            this.Controls.Add(this.BtnCerrar);
+            this.Controls.Add(this.BtnMinimizar);
+            this.Controls.Add(this.BtnEstatus);
             this.MaximizeBox = false;
             this.Name = "frmPrincipal";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            ((System.ComponentModel.ISupportInitialize)(this.BtnEstatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnIniciar;
         private System.Windows.Forms.ToolTip ttpMensajitos;
-        private System.Windows.Forms.Button btnPausar;
-        private System.Windows.Forms.Button btnMinimizar;
-        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.PictureBox BtnEstatus;
+        private System.Windows.Forms.PictureBox BtnMinimizar;
+        private System.Windows.Forms.PictureBox BtnCerrar;
     }
 }
 

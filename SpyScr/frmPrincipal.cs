@@ -17,24 +17,19 @@ namespace SpyScr
             InitializeComponent();
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        /* A C C I O N E S*/
+        private void BtnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void btnIniciar_Click(object sender, EventArgs e)
+        private void BtnCerrar_MouseDown(object sender, MouseEventArgs e)
         {
-
+            this.BtnCerrar.Image = SpyScr.Properties.Resources.imgExitOn;
         }
 
-        private void btnPausar_Click(object sender, EventArgs e)
-        {
 
-        }
+
     }
 }

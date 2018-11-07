@@ -117,5 +117,23 @@
     <Folder Include="Entidades\" />
     <Folder Include="Util\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgExit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgSwitchOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgSwitchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgExitOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgWindows-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgWindows-2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
