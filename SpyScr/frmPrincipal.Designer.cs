@@ -34,6 +34,8 @@
             this.BtnEstatus = new System.Windows.Forms.PictureBox();
             this.BtnMinimizar = new System.Windows.Forms.PictureBox();
             this.BtnCerrar = new System.Windows.Forms.PictureBox();
+            this.IcoNotifica = new System.Windows.Forms.NotifyIcon(this.components);
+            this.Tiempo = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BtnEstatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).BeginInit();
@@ -45,6 +47,7 @@
             resources.ApplyResources(this.BtnEstatus, "BtnEstatus");
             this.BtnEstatus.Name = "BtnEstatus";
             this.BtnEstatus.TabStop = false;
+            this.BtnEstatus.Click += new System.EventHandler(this.BtnEstatus_Click);
             // 
             // BtnMinimizar
             // 
@@ -52,6 +55,7 @@
             resources.ApplyResources(this.BtnMinimizar, "BtnMinimizar");
             this.BtnMinimizar.Name = "BtnMinimizar";
             this.BtnMinimizar.TabStop = false;
+            this.BtnMinimizar.Click += new System.EventHandler(this.BtnMinimizar_Click);
             // 
             // BtnCerrar
             // 
@@ -60,6 +64,16 @@
             this.BtnCerrar.Name = "BtnCerrar";
             this.BtnCerrar.TabStop = false;
             this.BtnCerrar.Click += new System.EventHandler(this.BtnCerrar_Click);
+            // 
+            // IcoNotifica
+            // 
+            resources.ApplyResources(this.IcoNotifica, "IcoNotifica");
+            this.IcoNotifica.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.IcoNotifica_MouseDoubleClick);
+            // 
+            // Tiempo
+            // 
+            this.Tiempo.Interval = 30000;
+            this.Tiempo.Tick += new System.EventHandler(this.Tiempo_Tick);
             // 
             // frmPrincipal
             // 
@@ -72,6 +86,7 @@
             this.Controls.Add(this.BtnEstatus);
             this.MaximizeBox = false;
             this.Name = "frmPrincipal";
+            this.ShowInTaskbar = false;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             ((System.ComponentModel.ISupportInitialize)(this.BtnEstatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).EndInit();
@@ -85,6 +100,8 @@
         private System.Windows.Forms.PictureBox BtnEstatus;
         private System.Windows.Forms.PictureBox BtnMinimizar;
         private System.Windows.Forms.PictureBox BtnCerrar;
+        private System.Windows.Forms.NotifyIcon IcoNotifica;
+        private System.Windows.Forms.Timer Tiempo;
     }
 }
 
