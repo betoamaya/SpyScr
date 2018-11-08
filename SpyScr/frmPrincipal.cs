@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SpyScr.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace SpyScr
     public partial class frmPrincipal : Form
     {
         public bool IsActivo { get; set; }
+        public string Pass { get; set; }
         public frmPrincipal()
         {
             InitializeComponent();
@@ -32,8 +35,25 @@ namespace SpyScr
             BtnMinimizar.MouseLeave += new EventHandler(BtnMinimizar_MouseLeave);
             BtnCerrar.MouseHover += new EventHandler(BtnCerrar_MouseHover);
             BtnCerrar.MouseLeave += new EventHandler(BtnCerrar_MouseLeave);
+            Pass = "P@55w0rd";
+            Tiempo.Interval = 15000;
             Tiempo.Enabled = true;
             Tiempo.Start();
+        }
+
+        private void CapturaPantalla()
+        {
+            Rectangle bounds = Screen.GetBounds(Screen.GetBounds(Point.Empty));
+            string fi = ".png";
+            Size curSize = default(Size);
+            Point curPos = default(Point);
+
+            DateTime Hoy = DateTime.Now;
+            string archivo = Hoy.ToString("yyyyMMddHHmmss") + "-SS";
+            string ScreenPath = $@"C:\Temp\SpyScr\{archivo}.png";
+
+            ScreenShot.CaptureImage(true, curSize, curPos,
+                Point.Empty, Point.Empty, bounds, ScreenPath, fi);
         }
 
         /* A C C I O N E S*/
@@ -42,7 +62,27 @@ namespace SpyScr
 
         private void BtnEstatus_Click(object sender, EventArgs e)
         {
+            string respuesta = Prompt.ShowDialog(text: "Indique Contraseña", caption: "Contraseña");
 
+            if (respuesta == Pass)
+            {
+                IsActivo = !IsActivo;
+                if (IsActivo)
+                {
+                    Tiempo.Start();
+                    this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOn;
+                }
+                else
+                {
+                    Tiempo.Stop();
+                    this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOff;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            
         }
 
         private void BtnEstatus_MouseHover(object sender, EventArgs e)
@@ -95,7 +135,17 @@ namespace SpyScr
 
         private void BtnCerrar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            string respuesta = Prompt.ShowDialog(text: "Indique Contraseña", caption: "Contraseña");
+
+            if (respuesta == Pass)
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
         }
 
         private void BtnCerrar_MouseHover(object sender, EventArgs e)
@@ -120,7 +170,7 @@ namespace SpyScr
 
         private void Tiempo_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("Test");
+            CapturaPantalla();
         }
     }
 }
