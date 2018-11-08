@@ -15,6 +15,7 @@ namespace SpyScr
     public partial class frmPrincipal : Form
     {
         public bool IsActivo { get; set; }
+        public bool IsDesactivado { get; set; }
         public string Pass { get; set; }
         public frmPrincipal()
         {
@@ -29,16 +30,47 @@ namespace SpyScr
             this.Icon = SpyScr.Properties.Resources.settings;
             this.IcoNotifica.Icon = SpyScr.Properties.Resources.settings;
             IsActivo = true;
+            IsDesactivado = false;
             BtnEstatus.MouseHover += new EventHandler(BtnEstatus_MouseHover);
             BtnEstatus.MouseLeave += new EventHandler(BtnEstatus_MouseLeave);
             BtnMinimizar.MouseHover += new EventHandler(BtnMinimizar_MouseHover);
             BtnMinimizar.MouseLeave += new EventHandler(BtnMinimizar_MouseLeave);
             BtnCerrar.MouseHover += new EventHandler(BtnCerrar_MouseHover);
             BtnCerrar.MouseLeave += new EventHandler(BtnCerrar_MouseLeave);
+            this.FormClosing += new FormClosingEventHandler(frmPrincipal_FormClosing);
             Pass = "P@55w0rd";
             Tiempo.Interval = 15000;
             Tiempo.Enabled = true;
             Tiempo.Start();
+        }
+
+        private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!IsDesactivado)
+            {
+                string respuesta = Prompt.ShowDialog(text: "Indique Contraseña", caption: "Contraseña");
+
+                if (respuesta == Pass)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    e.Cancel = true;
+                }
+            }
+            else
+            {
+                try
+                {
+                    Application.Exit();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         private void CapturaPantalla()
@@ -139,10 +171,12 @@ namespace SpyScr
 
             if (respuesta == Pass)
             {
+                IsDesactivado = true;
                 this.Close();
             }
             else
             {
+                IsDesactivado = false;
                 MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
