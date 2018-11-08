@@ -42,6 +42,7 @@ namespace SpyScr
             Tiempo.Interval = 15000;
             Tiempo.Enabled = true;
             Tiempo.Start();
+            this.IcoNotifica.Text = "Proceso Activo";
         }
 
         private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -103,11 +104,13 @@ namespace SpyScr
                 {
                     Tiempo.Start();
                     this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOn;
+                    this.IcoNotifica.Text = "Proceso Activo";
                 }
                 else
                 {
                     Tiempo.Stop();
                     this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOff;
+                    this.IcoNotifica.Text = "Proceso Inactivo";
                 }
             }
             else
