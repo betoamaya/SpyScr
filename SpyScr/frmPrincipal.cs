@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace SpyScr
 {
@@ -38,8 +39,9 @@ namespace SpyScr
             BtnCerrar.MouseHover += new EventHandler(BtnCerrar_MouseHover);
             BtnCerrar.MouseLeave += new EventHandler(BtnCerrar_MouseLeave);
             this.FormClosing += new FormClosingEventHandler(frmPrincipal_FormClosing);
-            Pass = "P@55w0rd";
-            Tiempo.Interval = 15000;
+            Pass = ConfigurationManager.AppSettings["Pass"].ToString();
+            string Intervalo = ConfigurationManager.AppSettings["Intervalo"].ToString();
+            Tiempo.Interval = int.Parse(Intervalo);
             Tiempo.Enabled = true;
             Tiempo.Start();
             this.IcoNotifica.Text = "Proceso Activo";
@@ -83,7 +85,8 @@ namespace SpyScr
 
             DateTime Hoy = DateTime.Now;
             string archivo = Hoy.ToString("yyyyMMddHHmmss") + "-SS";
-            string ScreenPath = $@"C:\Temp\SpyScr\{archivo}.png";
+            string Path = ConfigurationManager.AppSettings["Path"].ToString();
+            string ScreenPath = $@"{Path}{archivo}.png";
 
             ScreenShot.CaptureImage(true, curSize, curPos,
                 Point.Empty, Point.Empty, bounds, ScreenPath, fi);
