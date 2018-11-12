@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace SpyScr
 {
@@ -21,28 +22,37 @@ namespace SpyScr
         {
             InitializeComponent();
             InicializandoAplicacion();
+            ELog.SaveString(titulo: "Inicio SpyScr", mensaje: "Inicio de Aplicación");
         }
 
         /* P R O C E S O S */
 
         private void InicializandoAplicacion()
         {
-            this.Icon = SpyScr.Properties.Resources.settings;
-            this.IcoNotifica.Icon = SpyScr.Properties.Resources.settings;
-            IsActivo = true;
-            IsDesactivado = false;
-            BtnEstatus.MouseHover += new EventHandler(BtnEstatus_MouseHover);
-            BtnEstatus.MouseLeave += new EventHandler(BtnEstatus_MouseLeave);
-            BtnMinimizar.MouseHover += new EventHandler(BtnMinimizar_MouseHover);
-            BtnMinimizar.MouseLeave += new EventHandler(BtnMinimizar_MouseLeave);
-            BtnCerrar.MouseHover += new EventHandler(BtnCerrar_MouseHover);
-            BtnCerrar.MouseLeave += new EventHandler(BtnCerrar_MouseLeave);
-            this.FormClosing += new FormClosingEventHandler(frmPrincipal_FormClosing);
-            Pass = "P@55w0rd";
-            Tiempo.Interval = 15000;
-            Tiempo.Enabled = true;
-            Tiempo.Start();
-            this.IcoNotifica.Text = "Proceso Activo";
+            try
+            {
+                this.Icon = SpyScr.Properties.Resources.settings;
+                this.IcoNotifica.Icon = SpyScr.Properties.Resources.settings;
+                IsActivo = true;
+                IsDesactivado = false;
+                BtnEstatus.MouseHover += new EventHandler(BtnEstatus_MouseHover);
+                BtnEstatus.MouseLeave += new EventHandler(BtnEstatus_MouseLeave);
+                BtnMinimizar.MouseHover += new EventHandler(BtnMinimizar_MouseHover);
+                BtnMinimizar.MouseLeave += new EventHandler(BtnMinimizar_MouseLeave);
+                BtnCerrar.MouseHover += new EventHandler(BtnCerrar_MouseHover);
+                BtnCerrar.MouseLeave += new EventHandler(BtnCerrar_MouseLeave);
+                this.FormClosing += new FormClosingEventHandler(frmPrincipal_FormClosing);
+                Pass = ConfigurationManager.AppSettings["Pass"].ToString();
+                string Intervalo = ConfigurationManager.AppSettings["Intervalo"].ToString();
+                Tiempo.Interval = int.Parse(Intervalo);
+                Tiempo.Enabled = true;
+                Tiempo.Start();
+                this.IcoNotifica.Text = "Proceso Activo";
+            }
+            catch (Exception ex)
+            {
+                ELog.Save(this, ex);
+            }
         }
 
         private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -53,11 +63,13 @@ namespace SpyScr
 
                 if (respuesta == Pass)
                 {
+                    ELog.SaveString(titulo: "SpyScr Cerrado", mensaje: "Aplicación Cerrada");
                     this.Close();
                 }
                 else
                 {
                     MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    ELog.SaveString(titulo: "Contaseña Incorrecta", mensaje: "Contaseña Incorrecta");
                     e.Cancel = true;
                 }
             }
@@ -65,11 +77,12 @@ namespace SpyScr
             {
                 try
                 {
+                    ELog.SaveString(titulo: "SpyScr Cerrado", mensaje: "Aplicación Cerrada");
                     Application.Exit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    ELog.Save(this, ex);
                 }
             }
         }
@@ -83,7 +96,8 @@ namespace SpyScr
 
             DateTime Hoy = DateTime.Now;
             string archivo = Hoy.ToString("yyyyMMddHHmmss") + "-SS";
-            string ScreenPath = $@"C:\Temp\SpyScr\{archivo}.png";
+            string Path = ConfigurationManager.AppSettings["Path"].ToString();
+            string ScreenPath = $@"{Path}{archivo}.png";
 
             ScreenShot.CaptureImage(true, curSize, curPos,
                 Point.Empty, Point.Empty, bounds, ScreenPath, fi);
@@ -105,17 +119,20 @@ namespace SpyScr
                     Tiempo.Start();
                     this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOn;
                     this.IcoNotifica.Text = "Proceso Activo";
+                    ELog.SaveString(titulo: "Proceso Activo", mensaje: "Se activa proceso");
                 }
                 else
                 {
                     Tiempo.Stop();
                     this.BtnEstatus.Image = SpyScr.Properties.Resources.imgSwitchOff;
                     this.IcoNotifica.Text = "Proceso Inactivo";
+                    ELog.SaveString(titulo: "Proceso Inactivo", mensaje: "Se desactiva proceso");
                 }
             }
             else
             {
                 MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ELog.SaveString(titulo: "Contaseña Incorrecta", mensaje: "Contaseña Incorrecta");
             }
             
         }
@@ -174,11 +191,13 @@ namespace SpyScr
 
             if (respuesta == Pass)
             {
+                ELog.SaveString(titulo: "SpyScr Cerrado", mensaje: "Aplicación Cerrada");
                 IsDesactivado = true;
                 this.Close();
             }
             else
             {
+                ELog.SaveString(titulo: "Contaseña Incorrecta", mensaje: "Contaseña Incorrecta");
                 IsDesactivado = false;
                 MessageBox.Show("Contaseña Incorrecta", "Contraseña Incorrecta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -207,7 +226,14 @@ namespace SpyScr
 
         private void Tiempo_Tick(object sender, EventArgs e)
         {
-            CapturaPantalla();
+            try
+            {
+                CapturaPantalla();
+            }
+            catch (Exception ex)
+            {
+                ELog.Save(this, ex);
+            }
         }
     }
 }
